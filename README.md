@@ -1,7 +1,28 @@
-# Spring-Java-Microservice-Usuario
-Este repositório contém a primeira parte de um projeto de microserviço desenvolvido em Java Spring. O serviço realiza comunicação assíncrona utilizando RabbitMQ e Cloud AMQP. O objetivo é praticar a construção de microserviços com Java Spring.
+# Microserviço de Cadastro de Usuário - Java Spring
 
-## Instalação
+Este repositório contém a primeira parte de um projeto de microserviços desenvolvido com **Java Spring**, com foco, na prática de comunicação assíncrona entre serviços e uso de boas práticas de observabilidade e documentação.
+
+## Descrição
+
+A API oferece um endpoint para **cadastro de usuários**, contendo os campos `nome` e `email`. Após o cadastro, uma mensagem personalizada de boas-vindas é gerada e enviada para o e-mail do usuário por meio de uma fila de mensagens, utilizando **RabbitMQ**.
+
+## Tecnologias  Utilizadas
+
+- **Java + Spring Boot** – Framework principal da aplicação.
+- **RabbitMQ** com **CloudAMQP** – Comunicação assíncrona entre serviços.
+- **PostgreSQL** – Persistência dos dados dos usuários.
+- **Lombok** – Uso da anotação `@Slf4j` para geração de logs.
+- **Springdoc OpenAPI (Swagger)** – Documentação  dos endpoints da API.
+- **Spring Boot Actuator** – Monitoramento da aplicação.
+- Integração entre **Actuator e Swagger** para exposição de métricas via documentação da API.
+
+## Requisitos
+
+- Java 21+
+- Maven
+- PostgreSQL
+
+## Executando o Projeto
 
 1. Clone o repositório 1:
 
@@ -14,23 +35,21 @@ git https://github.com/bispobr/Spring-java-microservice-usuario.git
 git https://github.com/bispobr/Spring-java-microservice-email.git
 ```
 
-3. Instale as dependências com Maven
+3. Altere o arquivo de configuração **application.properties** com as credenciais de login do PostgreSQL do seu ambiente,juntamente com suas credenciais de email.
 
 ## Como usar
 
-1. Inicie a aplicação 
-2. API está acessível através do endereço http://localhost:8081
+1. Inicie a aplicação
+2. A API está acessível através do endereço http://localhost:8081
+3. A documentação da API está acessível através do Link http://localhost:8081/swagger-ui/index.html#/
+4. O endpoint de saúde e métricas do Actuator está acessível através do Link http://localhost:8081/actuator/health
 
 
 ## API Endpoints
 API contem os seguintes endpoints:
 
 ```http request
-Post /usuario - cadastra um novo usuario.
-```
-
-```http request
-POST /produto - Registra um novo Dado.
+Post /usuario - Endpoint REST para cadastro de usuários
 Content-Type: application/json
 
 {
@@ -38,5 +57,7 @@ Content-Type: application/json
   "email": "xxxxxxxxx@xxxxx.xxx"
 }
 ```
-## Banco de Dados
-Esse projeto utiliza o PostgresSQL como Banco de Dados.
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `nome` | `String` | **Obrigatório**. O nome do usuário 
+| `email` | `String` | **Obrigatório**. O email do usuário
