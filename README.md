@@ -15,6 +15,9 @@ A API oferece um endpoint para **cadastro de usuários**, contendo os campos `no
 - **Springdoc OpenAPI (Swagger)** – Documentação  dos endpoints da API.
 - **Spring Boot Actuator** – Monitoramento da aplicação.
 - Integração entre **Actuator e Swagger** para exposição de métricas via documentação da API.
+- **Docker** – criação, implantação e gerenciamento de aplicações dentro de contêineres.
+- **Tratamento de Exceções** - @RestControllerAdvice
+- **JUnit 5 + Mockito** – Testes Unitarios
 
 ## Requisitos
 
@@ -35,7 +38,7 @@ git https://github.com/bispobr/Spring-java-microservice-usuario.git
 git https://github.com/bispobr/Spring-java-microservice-email.git
 ```
 
-3. Altere o arquivo de configuração **application.properties** com as credenciais de login do PostgreSQL do seu ambiente,juntamente com suas credenciais de email.
+3. Altere o arquivo de configuração **application.properties** com as credenciais de login do PostgreSQL e os endereços RabbitMq do seu ambiente.
 
 ## Como usar
 
@@ -44,6 +47,19 @@ git https://github.com/bispobr/Spring-java-microservice-email.git
 3. A documentação da API está acessível através do Link http://localhost:8081/swagger-ui/index.html#/
 4. O endpoint de saúde e métricas do Actuator está acessível através do Link http://localhost:8081/actuator/health
 
+## Como Rodar em um Container (Opcional)
+
+1. Construa o projeto:
+
+```bash
+mvn clean package 
+```
+
+2. Gere a Imagem Docker. Com o Docker  instalado execute:
+
+```bash
+docker-compose up --build
+```
 
 ## API Endpoints
 API contem os seguintes endpoints:
