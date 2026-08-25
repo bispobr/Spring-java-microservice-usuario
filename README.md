@@ -1,79 +1,147 @@
-# Microserviço de Cadastro de Usuário - Java Spring
+# User Service
 
-Este repositório contém a primeira parte de um projeto de microserviços desenvolvido com **Java Spring**, com foco, na prática de comunicação assíncrona entre serviços e uso de boas práticas de observabilidade e documentação.
+Microsserviço responsável pelo cadastro de usuários e pela publicação de mensagens para processamento assíncrono de e-mails.
 
-## Descrição
+O serviço faz parte de um conjunto de microsserviços desenvolvido com Java e Spring Boot, utilizando RabbitMQ para comunicação entre serviços.
 
-A API oferece um endpoint para **cadastro de usuários**, contendo os campos `nome` e `email`. Após o cadastro, uma mensagem personalizada de boas-vindas é gerada e enviada para o e-mail do usuário por meio de uma fila de mensagens, utilizando **RabbitMQ**.
+## Arquitetura
 
-## Tecnologias  Utilizadas
+Fluxo simplificado:
 
-- **Java + Spring Boot** – Framework principal da aplicação.
-- **RabbitMQ** com **CloudAMQP** – Comunicação assíncrona entre serviços.
-- **PostgreSQL** – Persistência dos dados dos usuários.
-- **Lombok** – Uso da anotação `@Slf4j` para geração de logs.
-- **Springdoc OpenAPI (Swagger)** – Documentação  dos endpoints da API.
-- **Spring Boot Actuator** – Monitoramento da aplicação.
-- Integração entre **Actuator e Swagger** para exposição de métricas via documentação da API.
-- **Docker** – criação, implantação e gerenciamento de aplicações dentro de contêineres.
-- **Tratamento de Exceções** - @RestControllerAdvice
-- **JUnit 5 + Mockito** – Testes Unitarios
+```text
+Cliente
+   │
+   ▼
+User Service
+   │
+   │ mensagem
+   ▼
+RabbitMQ
+   │
+   ▼
+Email Service
+```
+
+Após o cadastro, o serviço publica uma mensagem para que o Email Service realize o processamento do e-mail.
+
+## Responsabilidades
+
+- Cadastrar usuários
+- Validar dados recebidos
+- Persistir usuários
+- Publicar mensagens para processamento assíncrono
+- Documentar a API com OpenAPI
+- Disponibilizar informações de saúde e métricas
+- Tratar exceções da API
+
+## Tecnologias
+
+- Java 21
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- Spring Validation
+- Spring AMQP
+- RabbitMQ / CloudAMQP
+- PostgreSQL
+- Springdoc OpenAPI
+- Spring Boot Actuator
+- Docker
+- JUnit 5
+- Mockito
 
 ## Requisitos
 
-- Java 21+
+- Java 21
 - Maven
 - PostgreSQL
+- RabbitMQ ou CloudAMQP
 
-## Executando o Projeto
+## Configuração
 
-1. Clone o repositório 1:
+As configurações de banco de dados e RabbitMQ podem ser fornecidas por variáveis de ambiente.
 
-```bash
-git https://github.com/bispobr/Spring-java-microservice-usuario.git
-```
-2. Clone o repositório 2:
+Exemplo:
 
-```bash
-git https://github.com/bispobr/Spring-java-microservice-email.git
-```
-
-3. Altere o arquivo de configuração **application.properties** com as credenciais de login do PostgreSQL e os endereços RabbitMq do seu ambiente.
-
-## Como usar
-
-1. Inicie a aplicação
-2. A API está acessível através do endereço http://localhost:8081
-3. A documentação da API está acessível através do Link http://localhost:8081/swagger-ui/index.html#/
-4. O endpoint de saúde e métricas do Actuator está acessível através do Link http://localhost:8081/actuator/health
-
-## Como Rodar em um Container (Opcional)
-
-1. Construa o projeto:
-
-```bash
-mvn clean package 
+```properties
+DB_URL=jdbc:postgresql://localhost:5432/microservice-usuario
+DB_USERNAME=postgres
+DB_PASSWORD=senha
+RABBITMQ_ADDRESSES=amqps://...
+RABBITMQ_EMAIL_QUEUE=...
 ```
 
-2. Gere a Imagem Docker. Com o Docker  instalado execute:
+Os valores devem ser configurados de acordo com o ambiente utilizado.
+
+## Executando
+
+Clone o repositório:
 
 ```bash
-docker-compose up --build
+git clone https://github.com/bispobr/Spring-java-microservice-usuario.git
+cd Spring-java-microservice-usuario
 ```
 
-## API Endpoints
-API contem os seguintes endpoints:
+Execute:
 
-```http request
-Post /usuario - Endpoint REST para cadastro de usuários
+```bash
+./mvnw spring-boot:run
+```
+
+A aplicação utiliza a porta `8081`.
+
+## API
+
+### Cadastrar usuário
+
+```http
+POST /usuario
 Content-Type: application/json
+```
 
+Exemplo:
+
+```json
 {
-  "nome": "aaaaaaaaa",
-  "email": "xxxxxxxxx@xxxxx.xxx"
+  "nome": "Nome do usuário",
+  "email": "usuario@email.com"
 }
 ```
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `nome` | `String` | **Obrigatório**. O nome do usuário 
-| `email` | `String` | **Obrigatório**. O email do usuário
+
+## Documentação da API
+
+Com a aplicação em execução:
+
+```text
+http://localhost:8081/swagger-ui/index.html
+```
+
+## Actuator
+
+Endpoint de saúde:
+
+```text
+http://localhost:8081/actuator/health
+```
+
+O Actuator também disponibiliza métricas da aplicação.
+
+## Docker
+
+O projeto possui configuração relacionada a Docker documentada no repositório. A execução deve ser feita de acordo com os arquivos de infraestrutura presentes na versão atual do projeto.
+
+## Testes
+
+```bash
+./mvnw test
+```
+
+## Serviços relacionados
+
+- [Email Service](https://github.com/bispobr/Spring-java-microservice-email)
+- [Order Service](https://github.com/bispobr/Spring-java-microservice-pedido)
+- [Processing Service](https://github.com/bispobr/Spring-java-microservice-processamento)
+
+## Status
+
+Projeto de estudo desenvolvido para praticar APIs REST, persistência com PostgreSQL, tratamento de exceções e comunicação assíncrona utilizando RabbitMQ.
