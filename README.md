@@ -71,7 +71,7 @@ RABBITMQ_ADDRESSES=amqps://...
 RABBITMQ_EMAIL_QUEUE=...
 ```
 
-Os valores devem ser configurados de acordo com o ambiente utilizado.
+Os valores devem ser ajustados de acordo com o ambiente utilizado.
 
 ## Executando
 
@@ -82,9 +82,10 @@ git clone https://github.com/bispobr/Spring-java-microservice-usuario.git
 cd Spring-java-microservice-usuario
 ```
 
-Execute:
+Compile e execute:
 
 ```bash
+./mvnw clean package
 ./mvnw spring-boot:run
 ```
 
