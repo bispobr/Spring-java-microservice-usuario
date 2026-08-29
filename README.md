@@ -144,11 +144,9 @@ docker-compose up --build
 ./mvnw test
 ```
 
-## Serviços relacionados
+## Serviço relacionado
 
 - [Email Service](https://github.com/bispobr/Spring-java-microservice-email)
-- [Order Service](https://github.com/bispobr/Spring-java-microservice-pedido)
-- [Processing Service](https://github.com/bispobr/Spring-java-microservice-processamento)
 
 ## Status
 
