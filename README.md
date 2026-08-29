@@ -61,17 +61,14 @@ Após o cadastro, o serviço publica uma mensagem para que o Email Service reali
 
 As configurações de banco de dados e RabbitMQ podem ser fornecidas por variáveis de ambiente.
 
-Exemplo:
-
-```properties
-DB_URL=jdbc:postgresql://localhost:5432/microservice-usuario
-DB_USERNAME=postgres
-DB_PASSWORD=senha
-RABBITMQ_ADDRESSES=amqps://...
-RABBITMQ_EMAIL_QUEUE=...
-```
-
-Os valores devem ser ajustados de acordo com o ambiente utilizado.
+| Variável | Descrição | Exemplo |
+|---|---|---|
+| `DB_URL` | URL de conexão com o PostgreSQL | `jdbc:postgresql://localhost:5432/microservice-usuario` |
+| `DB_USERNAME` | Usuário do PostgreSQL | `postgres` |
+| `DB_PASSWORD` | Senha do PostgreSQL | `admin` |
+| `JPA_DDL_AUTO` | Estratégia de atualização do schema | `update` |
+| `RABBITMQ_ADDRESSES` | Endereço do RabbitMQ ou CloudAMQP | `amqps://...` |
+| `RABBITMQ_EMAIL_QUEUE` | Nome da fila utilizada pelo Email Service | `...` |
 
 ## Executando
 
