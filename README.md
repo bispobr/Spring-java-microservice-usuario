@@ -126,7 +126,17 @@ O Actuator também disponibiliza métricas da aplicação.
 
 ## Docker
 
-O projeto possui configuração relacionada a Docker documentada no repositório. A execução deve ser feita de acordo com os arquivos de infraestrutura presentes na versão atual do projeto.
+1. Construa o projeto:
+
+```bash
+mvn clean package 
+```
+
+2. Gere a Imagem Docker. Com o Docker  instalado execute:
+
+```bash
+docker-compose up --build
+```
 
 ## Testes
 
